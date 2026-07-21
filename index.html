@@ -42,21 +42,92 @@
         </div>
     </div>
 
-    <!-- پاکت نامه - ساده با استیکر -->
+    <!-- پاکت نامه -->
+    <div class="envelope-stage" id="envelopeStage">
+        <div class="envelope-shadow"></div>
+        <!-- تمام پاکت داخل یک دکمه است برای اطمینان از کلیک -->
+        <button class="envelope-wrapper" id="envelopeWrapper" type="button" aria-label="باز کردن نامه">
+            <div class="envelope" id="envelope">
+                <div class="envelope-body">
+                    <!-- استیکر اصلی -->
+                    <img id="envelopeSticker" 
+                         src="images/sticker.png" 
+                         alt="تولدت مبارک" 
+                         class="envelope-sticker">
+                    <!-- ایموجی جایگزین -->
+                    <div class="envelope-sticker-fallback">🎂</div>
+                    <!-- متن راهنما روی پاکت -->
+                    <div class="envelope-tap-hint">بزن اینجا</div>
+                </div>
+                <div class="envelope-flap" id="envelopeFlap">
+                    <div class="flap-seal">♥</div>
+                </div>
+            </div
+<details type="reasoning" done="true" duration="1">
+<summary>Thought for 1 seconds</summary>
+&gt; The user wants me to continue the index.html file. Let me complete it properly.
+</details>
+```html
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0a0a1f">
+    <title>🎂 تولدت مبارک</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700&family=Parastoo:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- پس‌زمینه -->
+    <div class="bg-main"></div>
+    <div class="night-sky" id="nightSky"></div>
+    <canvas id="particlesCanvas"></canvas>
+
+    <!-- کیک تولد -->
+    <div class="cake-stage" id="cakeStage">
+        <div class="cake">
+            <div class="cake-tier cake-top">
+                <div class="tier-decoration"></div>
+                <div class="candles-row" id="candlesTop"></div>
+                <div class="tier-top"></div>
+            </div>
+            <div class="cake-tier cake-middle">
+                <div class="tier-decoration"></div>
+                <div class="candles-row" id="candlesMiddle"></div>
+                <div class="drip drip-1"></div>
+                <div class="drip drip-2"></div>
+                <div class="drip drip-3"></div>
+            </div>
+            <div class="cake-tier cake-bottom">
+                <div class="tier-decoration"></div>
+                <div class="candles-row" id="candlesBottom"></div>
+                <div class="drip drip-4"></div>
+                <div class="drip drip-5"></div>
+            </div>
+            <div class="cake-plate"></div>
+            <div class="age-number">
+                <span>۱</span><span>۹</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- پاکت نامه - کل ناحیه قابل کلیک -->
     <div class="envelope-stage" id="envelopeStage">
         <div class="envelope-shadow"></div>
         <div class="envelope-wrapper" id="envelopeWrapper">
             <div class="envelope" id="envelope">
                 <div class="envelope-body">
-                    <!-- استیکر شخصیت با کیک -->
-                    <img src="https://raw.githubusercontent.com/mohammadm2022com-source/mahdi-b/refs/heads/main/images.png" 
+                    <img id="envelopeSticker" 
+                         src="images/sticker.png" 
                          alt="تولدت مبارک" 
-                         class="envelope-sticker"
-                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <!-- فال‌بک اگه عکس لود نشد -->
-                    <div class="envelope-sticker-fallback" style="display:none;">🎂</div>
+                         class="envelope-sticker">
+                    <div class="envelope-sticker-fallback">🎂</div>
+                    <div class="envelope-tap-hint">👆 بزن اینجا</div>
                 </div>
-                <div class="envelope-flap" id="envelopeFlap"></div>
+                <div class="envelope-flap" id="envelopeFlap">
+                    <div class="flap-seal">♥</div>
+                </div>
             </div>
         </div>
     </div>
@@ -66,13 +137,12 @@
         <div class="letter" id="letter">
             <div class="letter-frame">
                 <div class="letter-content">
-                    <!-- استیکر بالای نامه -->
                     <div class="letter-header">
-                        <img src="images/sticker.png" 
+                        <img id="letterSticker" 
+                             src="images/sticker.png" 
                              alt="تولدت مبارک" 
-                             class="letter-sticker"
-                             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <div class="letter-sticker-fallback" style="display:none;">🎂</div>
+                             class="letter-sticker">
+                        <div class="letter-sticker-fallback">🎂</div>
                         <div class="letter-greeting">سلام رفیق خوبم!</div>
                     </div>
                     <div class="letter-body" id="letterBody"></div>
@@ -83,43 +153,4 @@
                     <div class="letter-footer">
                         <span>🎉</span>
                         <span>تولدت مبارک</span>
-                        <span>🎉</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- راهنما -->
-    <div class="hint" id="hint">
-        <span class="hint-icon">👆</span>
-        <span class="hint-text">روی پاکت بزن</span>
-    </div>
-
-    <!-- کنترل‌ها -->
-    <div class="controls">
-        <button class="ctrl-btn" id="musicBtn" title="موسیقی">
-            <span id="musicIcon">🎵</span>
-        </button>
-        <button class="ctrl-btn" id="soundBtn" title="صدا">
-            <span id="soundIcon">🔊</span>
-        </button>
-        <button class="ctrl-btn hidden" id="closeBtn" title="بستن">
-            <span>🔙</span>
-        </button>
-    </div>
-
-    <!-- نوار پیشرفت -->
-    <div class="progress-bar hidden" id="progressBar">
-        <div class="progress-fill" id="progressFill"></div>
-        <div class="progress-text" id="progressText">در حال نوشتن...</div>
-    </div>
-
-    <!-- موسیقی -->
-    <audio id="bgMusic" loop>
-        <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_4cb1c9d7e0.mp3" type="audio/mpeg">
-    </audio>
-
-    <script src="script.js"></script>
-</body>
-</html>
+                        <span>🎉
