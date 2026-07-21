@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0a0a1f">
+    <title>💌 نامه‌ای از قلب من</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700&family=Parastoo:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- آسمان شب و ستاره‌ها -->
+    <div class="night-sky" id="nightSky"></div>
+    
+    <!-- ذرات نور -->
+    <canvas id="particlesCanvas"></canvas>
+    
+    <!-- گلبرگ‌های رز -->
+    <div class="petals-container" id="petalsContainer"></div>
+    
+    <!-- شمع‌ها -->
+    <div class="candles-container">
+        <div class="candle candle-left">
+            <div class="flame"></div>
+            <div class="wick"></div>
+            <div class="wax"></div>
+        </div>
+        <div class="candle candle-right">
+            <div class="flame"></div>
+            <div class="wick"></div>
+            <div class="wax"></div>
+        </div>
+    </div>
+    
+    <!-- ماه -->
+    <div class="moon">
+        <div class="moon-glow"></div>
+        <div class="moon-surface"></div>
+    </div>
+    
+    <!-- پاکت نامه -->
+    <div class="envelope-wrapper" id="envelopeWrapper">
+        <div class="envelope" id="envelope">
+            <div class="envelope-back"></div>
+            <div class="envelope-body">
+                <div class="wax-seal">💝</div>
+                <div class="envelope-text">نامه‌ای برای تو</div>
+            </div>
+            <div class="envelope-flap" id="envelopeFlap"></div>
+            <div class="envelope-left"></div>
+            <div class="envelope-right"></div>
+            <div class="letter" id="letter">
+                <div class="letter-content">
+                    <h1 class="letter-title">عزیز من...</h1>
+                    <div class="letter-body" id="letterBody"></div>
+                    <div class="letter-signature">با عشق، <span class="heart-beat">♥</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- راهنما -->
+    <div class="hint" id="hint">👆 روی پاکت بزن</div>
+    
+    <!-- دکمه‌های کنترل -->
+    <div class="controls">
+        <button class="ctrl-btn" id="musicBtn" title="موسیقی">
+            <span id="musicIcon">🎵</span>
+        </button>
+        <button class="ctrl-btn" id="soundBtn" title="صدا">
+            <span id="soundIcon">🔊</span>
+        </button>
+        <button class="ctrl-btn hidden" id="closeBtn" title="بستن نامه">
+            <span>🔙</span>
+        </button>
+    </div>
+    
+    <!-- نوار پیشرفت تایپ -->
+    <div class="progress-bar hidden" id="progressBar">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+    
+    <!-- موسیقی پس‌زمینه -->
+    <audio id="bgMusic" loop>
+        <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_4cb1c9d7e0.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- اسکریپت -->
+    <script src="script.js"></script>
+</body>
+</html>
