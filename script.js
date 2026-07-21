@@ -1,17 +1,14 @@
+// ============ متن نامه ============
 const letterParagraphs = [
     "سلام رفیق خوبم! 🎂\n\nامروز روز توست و من نمی‌تونم این لحظه رو بدون اینکه چند کلمه‌ای باهات حرف بزنم، بگذرونم. ۱۹ سالگی‌ات رو تبریک میگم، یه سن فوق‌العاده که از این به بعد، مسئولیت‌های جدید و دنیای تازه‌ای پیش روته.",
-
     "یادته وقتی بچه بودیم و با هم کلی خاطره ساختیم؟ از اون روزایی که با هم بازی می‌کردیم تا الان که هر کدوم یه مسیری رو رفتیم. ولی یه چیزی که هیچوقت عوض نشده، دوستی ماست. این دوستی برای من از طلا هم باارزش‌تره.",
-
     "از خداوند متعال برات آرزوی بهترین‌ها رو دارم. آرزو می‌کنم سال جدید زندگیت پر از سلامتی، شادی، موفقیت و خیر و برکت باشه. هرجا که هستی، یادت باشه که همیشه یه دوست داری که به فکرته و برات دعا می‌کنه.",
-
     "۱۹ تا شمع روی کیکت فوت کن و آرزو کن. من مطمئنم که آرزوهات، با کمک خداوند، یکی یکی برآورده میشن. تو آدم خوبی هستی و لایق بهترین‌هایی.",
-
     "از طرف تمام لحظات خوبی که با هم گذروندیم، از طرف تمام خنده‌ها و شادی‌ها، تولدت رو صد بار تبریک میگم. تو بهترین دوستی هستی که می‌تونستم داشته باشم.",
-
     "امیدوارم این نامه کوچیک، لبخند روی لبت بیاره. تولدت مبارک رفیق! 🎉\n\nدوست دارم تا همیشه."
 ];
 
+// ============ المنت‌ها ============
 const envelopeStage = document.getElementById('envelopeStage');
 const envelope = document.getElementById('envelope');
 const envelopeWrapper = document.getElementById('envelopeWrapper');
@@ -32,6 +29,7 @@ const nightSky = document.getElementById('nightSky');
 const particlesCanvas = document.getElementById('particlesCanvas');
 const particlesCtx = particlesCanvas.getContext('2d');
 
+// ============ حالت ============
 let state = {
     isOpened: false,
     isTyping: false,
@@ -42,11 +40,11 @@ let state = {
     audioContext: null
 };
 
+// ============ شمع‌ها ============
 function createCandles() {
     const topCandles = document.getElementById('candlesTop');
     const middleCandles = document.getElementById('candlesMiddle');
     const bottomCandles = document.getElementById('candlesBottom');
-    
     const colors = ['#ffb6c1', '#ff69b4', '#ffd700', '#87ceeb', '#98fb98', '#dda0dd', '#ffa500'];
     
     for (let i = 0; i < 1; i++) topCandles.appendChild(createCandle(colors[i % colors.length]));
@@ -76,6 +74,7 @@ function darken(hex, percent) {
     return '#' + (0x1000000 + (R << 16) + (G << 8) + B).toString(16).slice(1);
 }
 
+// ============ ستاره‌ها ============
 function createStars() {
     const count = window.innerWidth < 480 ? 80 : 140;
     for (let i = 0; i < count; i++) {
@@ -93,6 +92,7 @@ function createStars() {
     }
 }
 
+// ============ ذرات ============
 function initParticles() {
     particlesCanvas.width = window.innerWidth;
     particlesCanvas.height = window.innerHeight;
@@ -139,6 +139,7 @@ function drawParticles() {
     requestAnimationFrame(drawParticles);
 }
 
+// ============ صدا ============
 function initAudio() {
     if (!state.audioContext) {
         state.audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -214,6 +215,7 @@ function playSound(type) {
     }
 }
 
+// ============ تایپ نامه ============
 async function typeParagraph(text, paragraphIndex, totalParagraphs) {
     return new Promise((resolve) => {
         const lines = text.split('\n');
@@ -294,6 +296,7 @@ function resetLetter() {
     progressBar.classList.add('hidden');
 }
 
+// ============ باز و بسته کردن پاکت ============
 function openEnvelope() {
     if (state.isOpened) return;
     state.isOpened = true;
@@ -344,6 +347,7 @@ function closeEnvelope() {
     }, 800);
 }
 
+// ============ کنترل صدا/موزیک ============
 function toggleMusic() {
     state.musicOn = !state.musicOn;
     if (state.musicOn) {
@@ -369,12 +373,14 @@ function toggleSound() {
     if (state.soundOn) playSound('click');
 }
 
-envelopeWrapper.addEventListener('click', openEnvelope);
+// ============ رویدادها ============
+envelopeStage.addEventListener('click', openEnvelope);
 envelopeFlap.addEventListener('click', (e) => { e.stopPropagation(); openEnvelope(); });
 closeBtn.addEventListener('click', (e) => { e.stopPropagation(); closeEnvelope(); });
 musicBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleMusic(); });
 soundBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSound(); });
 
+// جلوگیری از زوم دو انگشتی
 document.addEventListener('touchstart', (e) => {
     if (e.touches.length > 1) e.preventDefault();
 }, { passive: false });
@@ -386,11 +392,13 @@ document.addEventListener('touchend', (e) => {
     lastTouchEnd = now;
 }, false);
 
+// ریسایز
 window.addEventListener('resize', () => {
     particlesCanvas.width = window.innerWidth;
     particlesCanvas.height = window.innerHeight;
 });
 
+// ============ شروع ============
 createCandles();
 createStars();
 initParticles();
