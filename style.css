@@ -1,4 +1,4 @@
-/* ============ ریست و تنظیمات پایه ============ */
+/* ============ ریست ============ */
 * {
     margin: 0;
     padding: 0;
@@ -8,29 +8,70 @@
 
 :root {
     --gold: #d4af37;
-    --rose: #e91e63;
-    --cream: #f5e6d3;
-    --night: #0a0a1f;
-    --night-2: #1a1a3e;
-    --paper: #f4e8d0;
+    --gold-light: #f4d03f;
+    --emerald: #006633;
+    --emerald-light: #008844;
+    --paper: #faf3e0;
+    --paper-dark: #e8d4a8;
+    --envelope-color: #c9a876;
+    --envelope-dark: #b8956a;
+    --night: #1a0a0a;
 }
 
 html, body {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    font-family: 'Vazirmatn', 'Parastoo', Tahoma, sans-serif;
-    background: radial-gradient(ellipse at top, var(--night-2) 0%, var(--night) 70%);
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    background: #1a0a0a;
     user-select: none;
     -webkit-user-select: none;
 }
 
-/* ============ آسمان شب و ستاره‌ها ============ */
+/* ============ پس‌زمینه حرم ============ */
+.shrine-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.shrine-image {
+    position: absolute;
+    inset: -20px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(8px) brightness(0.4);
+    transform: scale(1.1);
+    animation: slow-zoom 30s ease-in-out infinite alternate;
+}
+
+@keyframes slow-zoom {
+    0% { transform: scale(1.1); }
+    100% { transform: scale(1.2); }
+}
+
+.shrine-overlay {
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(ellipse at center, transparent 0%, rgba(26, 10, 10, 0.7) 70%),
+        linear-gradient(180deg, rgba(0, 102, 51, 0.2) 0%, rgba(26, 10, 10, 0.8) 100%);
+}
+
+#particlesCanvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+}
+
 .night-sky {
     position: fixed;
     inset: 0;
     pointer-events: none;
-    z-index: 0;
+    z-index: 1;
 }
 
 .star {
@@ -42,224 +83,128 @@ html, body {
     box-shadow: 0 0 4px white;
 }
 
+.star.gold { background: var(--gold-light); box-shadow: 0 0 6px var(--gold-light); }
+
 @keyframes twinkle {
     0%, 100% { opacity: 0.2; transform: scale(0.8); }
-    50% { opacity: 1; transform: scale(1.2); }
+    50% { opacity: 1; transform: scale(1.3); }
 }
 
-/* ============ ماه ============ */
-.moon {
-    position: fixed;
-    top: 8%;
-    left: 8%;
-    width: 90px;
-    height: 90px;
-    z-index: 1;
-}
-
-.moon-surface {
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at 30% 30%, #fff8dc, #f4e8b8);
-    border-radius: 50%;
-    box-shadow: 
-        inset -15px -15px 30px rgba(0,0,0,0.2),
-        0 0 40px rgba(255, 248, 220, 0.6),
-        0 0 80px rgba(255, 248, 220, 0.3);
-    position: relative;
-}
-
-.moon-surface::before, .moon-surface::after {
-    content: '';
-    position: absolute;
-    background: rgba(0,0,0,0.08);
-    border-radius: 50%;
-}
-.moon-surface::before {
-    width: 18px; height: 18px;
-    top: 25%; left: 30%;
-}
-.moon-surface::after {
-    width: 12px; height: 12px;
-    top: 55%; left: 55%;
-    box-shadow: -20px 10px 0 rgba(0,0,0,0.06), 15px -15px 0 rgba(0,0,0,0.05);
-}
-
-.moon-glow {
-    position: absolute;
-    inset: -30px;
-    background: radial-gradient(circle, rgba(255,248,220,0.3) 0%, transparent 70%);
-    border-radius: 50%;
-    animation: glow-pulse 4s ease-in-out infinite;
-}
-
-@keyframes glow-pulse {
-    0%, 100% { transform: scale(1); opacity: 0.7; }
-    50% { transform: scale(1.2); opacity: 1; }
-}
-
-/* ============ ذرات نور ============ */
-#particlesCanvas {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 2;
-}
-
-/* ============ گلبرگ‌های رز ============ */
-.petals-container {
+/* ============ تزئینات حرم در گوشه‌ها ============ */
+.shrine-decoration {
     position: fixed;
     inset: 0;
     pointer-events: none;
     z-index: 3;
+}
+
+.dome-corner, .minaret-corner {
+    position: absolute;
+    opacity: 0.25;
+    filter: brightness(0.7) contrast(1.2);
+}
+
+.dome-corner {
+    top: -50px;
+    right: -50px;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(212, 175, 55, 0.4);
+}
+
+.dome-corner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.minaret-corner {
+    bottom: -30px;
+    left: -30px;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 50px rgba(212, 175, 55, 0.3);
+}
+
+.minaret-corner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ============ استیکرهای شناور ============ */
+.stickers-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 4;
     overflow: hidden;
 }
 
-.petal {
+.sticker {
     position: absolute;
-    width: 25px;
-    height: 25px;
-    background: radial-gradient(ellipse at center, #ff6b9d 0%, #c2185b 70%, #880e4f 100%);
-    border-radius: 0 100% 0 100%;
-    opacity: 0.85;
-    box-shadow: inset 0 0 8px rgba(0,0,0,0.2);
-    animation: petal-fall var(--fall-duration, 12s) linear infinite;
-    animation-delay: var(--fall-delay, 0s);
-    transform-origin: center;
+    opacity: 0;
+    animation: sticker-float var(--float-duration, 12s) linear infinite;
+    animation-delay: var(--float-delay, 0s);
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
 }
 
-@keyframes petal-fall {
+@keyframes sticker-float {
     0% {
-        transform: translate(0, -50px) rotate(0deg) translateX(0);
+        transform: translateY(110vh) rotate(0deg);
         opacity: 0;
     }
-    10% { opacity: 0.85; }
-    90% { opacity: 0.85; }
+    5% { opacity: 0.9; }
+    95% { opacity: 0.9; }
     100% {
-        transform: translate(var(--drift, 100px), 110vh) rotate(720deg) translateX(var(--drift2, -50px));
+        transform: translateY(-100px) rotate(var(--rotation, 360deg));
         opacity: 0;
     }
 }
 
-/* ============ شمع‌ها ============ */
-.candles-container {
-    position: fixed;
-    bottom: 5%;
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    z-index: 1;
-    padding: 0 10%;
-}
-
-.candle {
-    position: relative;
-    width: 50px;
-    height: 130px;
-    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
-}
-
-.wax {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 110px;
-    background: linear-gradient(180deg, #fff5e6 0%, #f5e6d3 50%, #d4b896 100%);
-    border-radius: 8px 8px 4px 4px;
-    box-shadow: inset 0 -10px 20px rgba(0,0,0,0.15);
-}
-
-.wax::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
-    height: 15px;
-    background: radial-gradient(ellipse, #c2185b 0%, #880e4f 100%);
-    border-radius: 50%;
-    box-shadow: 0 -2px 8px rgba(194, 24, 91, 0.5);
-}
-
-.wick {
-    position: absolute;
-    top: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 3px;
-    height: 12px;
-    background: #2c1810;
-    border-radius: 2px;
-}
-
-.flame {
-    position: absolute;
-    top: -45px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 18px;
-    height: 40px;
-    background: radial-gradient(ellipse at center bottom, 
-        #fff8dc 0%, 
-        #ffeb3b 20%, 
-        #ff9800 50%, 
-        #ff5722 80%, 
-        transparent 100%);
-    border-radius: 50% 50% 30% 30% / 60% 60% 40% 40%;
-    animation: flicker 0.5s ease-in-out infinite alternate;
-    filter: blur(0.5px);
-}
-
-.flame::before {
-    content: '';
-    position: absolute;
-    top: 30%; left: 50%;
-    transform: translateX(-50%);
-    width: 6px;
-    height: 20px;
-    background: radial-gradient(ellipse, #fff8dc, #ffeb3b);
-    border-radius: 50%;
-    animation: flicker-inner 0.3s ease-in-out infinite alternate;
-}
-
-.flame::after {
-    content: '';
-    position: absolute;
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 60px;
-    background: radial-gradient(circle, rgba(255, 200, 100, 0.4) 0%, transparent 70%);
-    border-radius: 50%;
-    animation: glow 2s ease-in-out infinite;
-}
-
-@keyframes flicker {
-    0% { transform: translateX(-50%) scale(1, 1) rotate(-1deg); }
-    100% { transform: translateX(-50%) scale(1.05, 1.1) rotate(1deg); }
-}
-
-@keyframes flicker-inner {
-    0% { opacity: 0.8; }
-    100% { opacity: 1; }
-}
-
-@keyframes glow {
-    0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.6; }
-    50% { transform: translateX(-50%) scale(1.3); opacity: 1; }
-}
-
-/* ============ پاکت نامه ============ */
-.envelope-wrapper {
+/* ============ صحنه پاکت - طراحی تمیز ============ */
+.envelope-stage {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: min(90vw, 360px);
-    height: min(60vh, 260px);
-    perspective: 1200px;
+    transform: translate(-50%, -55%);
+    width: min(88vw, 340px);
     z-index: 10;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.envelope-stage.fade-out {
+    opacity: 0;
+    transform: translate(-50%, -55%) scale(0.6);
+    pointer-events: none;
+}
+
+.envelope-shadow {
+    position: absolute;
+    bottom: -25px;
+    left: 10%;
+    width: 80%;
+    height: 30px;
+    background: radial-gradient(ellipse, rgba(0,0,0,0.7), transparent 70%);
+    filter: blur(8px);
+    animation: shadow-pulse 3s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes shadow-pulse {
+    0%, 100% { transform: scaleX(1); opacity: 0.6; }
+    50% { transform: scaleX(0.9); opacity: 0.8; }
+}
+
+.envelope-wrapper {
+    position: relative;
+    width: 100%;
+    height: 240px;
+    perspective: 1200px;
     cursor: pointer;
 }
 
@@ -268,142 +213,257 @@ html, body {
     width: 100%;
     height: 100%;
     transform-style: preserve-3d;
-    transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.envelope.opened {
-    transform: translateY(-30px) scale(0.85);
+/* پشت پاکت - همان رنگ بدنه */
+.envelope-back {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--envelope-dark) 0%, #a08856 100%);
+    border-radius: 8px;
+    box-shadow: 
+        inset 0 0 20px rgba(0,0,0,0.2),
+        0 25px 60px rgba(0,0,0,0.6);
 }
 
+/* بدنه اصلی پاکت */
 .envelope-body {
     position: absolute;
     bottom: 0;
+    left: 0;
     width: 100%;
-    height: 75%;
-    background: linear-gradient(135deg, #c9a876 0%, #b8956a 50%, #a08856 100%);
+    height: 100%;
+    background: linear-gradient(135deg, var(--envelope-color) 0%, var(--envelope-dark) 100%);
     border-radius: 8px;
     box-shadow: 
-        0 20px 60px rgba(0,0,0,0.5),
-        inset 0 0 30px rgba(0,0,0,0.2);
+        inset 0 2px 8px rgba(255,255,255,0.2),
+        inset 0 -8px 20px rgba(0,0,0,0.15);
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     overflow: hidden;
 }
 
-.envelope-body::before {
-    content: '';
+/* الگوی پس‌زمینه پاکت */
+.envelope-pattern {
     position: absolute;
     inset: 0;
-    background: 
-        repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
-    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='0.5' opacity='0.2'%3E%3Cpath d='M30 5L40 20L55 25L45 40L30 55L15 40L5 25L20 20Z'/%3E%3Ccircle cx='30' cy='30' r='8'/%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.4;
 }
 
+/* فریم تزئینی */
+.envelope-frame {
+    position: relative;
+    z-index: 2;
+    width: 85%;
+    height: 85%;
+    border: 2px solid rgba(212, 175, 55, 0.4);
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(2px);
+}
+
+.frame-corner {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--gold);
+    opacity: 0.8;
+}
+
+.frame-corner.tl { top: -2px; left: -2px; border-right: none; border-bottom: none; border-radius: 4px 0 0 0; }
+.frame-corner.tr { top: -2px; right: -2px; border-left: none; border-bottom: none; border-radius: 0 4px 0 0; }
+.frame-corner.bl { bottom: -2px; left: -2px; border-right: none; border-top: none; border-radius: 0 0 0 4px; }
+.frame-corner.br { bottom: -2px; right: -2px; border-left: none; border-top: none; border-radius: 0 0 4px 0; }
+
+.envelope-icon {
+    font-size: 42px;
+    margin-bottom: 12px;
+    animation: float-icon 3s ease-in-out infinite;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+}
+
+@keyframes float-icon {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-5px) scale(1.05); }
+}
+
+.envelope-text {
+    color: #3e2723;
+    font-size: 17px;
+    font-weight: 700;
+    font-family: 'Parastoo', serif;
+    text-shadow: 0 1px 2px rgba(255,255,255,0.3);
+    margin-bottom: 4px;
+    text-align: center;
+}
+
+.envelope-subtext {
+    color: #5d4037;
+    font-size: 12px;
+    font-family: 'Vazirmatn', sans-serif;
+    text-align: center;
+    opacity: 0.8;
+}
+
+/* مهر wax */
 .wax-seal {
-    width: 70px;
-    height: 70px;
-    background: radial-gradient(circle, #c2185b 0%, #880e4f 70%, #560029 100%);
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 55px;
+    height: 55px;
+    background: radial-gradient(circle at 30% 30%, #c2185b, #880e4f 60%, #560029);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 32px;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'Amiri', serif;
     box-shadow: 
         0 4px 15px rgba(0,0,0,0.4),
-        inset 0 0 20px rgba(0,0,0,0.3),
+        inset 0 0 15px rgba(0,0,0,0.3),
         inset 0 2px 4px rgba(255,255,255,0.2);
-    margin-top: 30px;
+    z-index: 3;
     animation: pulse-seal 2s ease-in-out infinite;
 }
 
+.wax-seal::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 1.5px dashed rgba(255,255,255,0.3);
+    border-radius: 50%;
+}
+
 @keyframes pulse-seal {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+    0%, 100% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.05); }
 }
 
-.envelope-text {
-    color: #fff;
-    font-size: 18px;
-    font-weight: 700;
-    margin-top: 15px;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    font-family: 'Parastoo', serif;
-}
-
+/* فلپ بالایی پاکت - همان رنگ بدنه */
 .envelope-flap {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 50%;
-    background: linear-gradient(135deg, #b8956a 0%, #a08856 100%);
-    transform-origin: top center;
+    height: 55%;
+    background: linear-gradient(180deg, var(--envelope-color) 0%, var(--envelope-dark) 100%);
     clip-path: polygon(0 0, 50% 100%, 100% 0);
-    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 5;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transform-origin: top center;
+    transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 4;
+    cursor: pointer;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+}
+
+.envelope-flap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 8L24 18L20 28L16 18Z' fill='none' stroke='%23ffffff' stroke-width='0.5' opacity='0.3'/%3E%3C/svg%3E");
+    background-size: 30px 30px;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .envelope.opened .envelope-flap {
     transform: rotateX(180deg);
 }
 
-.envelope-left {
+/* ============ راهنما - زیر پاکت ============ */
+.hint {
     position: absolute;
-    top: 25%;
-    left: 0;
-    width: 0;
-    height: 75%;
-    border-style: solid;
-    border-width: 0 0 130px 90px;
-    border-color: transparent transparent #a08856 transparent;
-    z-index: 3;
-}
-
-.envelope-right {
-    position: absolute;
-    top: 25%;
-    right: 0;
-    width: 0;
-    height: 75%;
-    border-style: solid;
-    border-width: 130px 90px 0 0;
-    border-color: #b8956a transparent transparent transparent;
-    z-index: 3;
-}
-
-.envelope-back {
-    position: absolute;
-    inset: 0;
-    background: #8b7355;
-    border-radius: 8px;
-    z-index: 1;
-}
-
-/* ============ نامه (کاغذ قدیمی) ============ */
-.letter {
-    position: absolute;
-    top: 50%;
+    bottom: -50px;
     left: 50%;
-    width: min(92vw, 380px);
-    max-height: 75vh;
-    background: 
-        radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.15) 100%),
-        linear-gradient(135deg, #f4e8d0 0%, #e8d4a8 50%, #d4b896 100%);
-    border-radius: 4px;
-    padding: 25px 20px;
-    box-shadow: 
-        0 20px 60px rgba(0,0,0,0.6),
-        0 0 0 1px rgba(0,0,0,0.1),
-        inset 0 0 50px rgba(139, 115, 85, 0.2);
-    transform: translate(-50%, -50%) scale(0);
-    transition: transform 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s;
-    z-index: 4;
+    transform: translateX(-50%);
+    color: var(--gold-light);
+    font-size: 14px;
+    text-align: center;
+    z-index: 30;
+    pointer-events: none;
+    transition: opacity 0.5s;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    animation: hint-bounce 2s ease-in-out infinite;
+    background: rgba(26, 10, 10, 0.7);
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    backdrop-filter: blur(5px);
+}
+
+.hint.hidden { opacity: 0; }
+
+@keyframes hint-bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+}
+
+/* ============ نامه ============ */
+.letter-stage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    padding: 15px;
+    transition: opacity 0.8s ease;
+}
+
+.letter-stage.hidden { display: none; }
+
+.letter-stage.entering {
+    animation: letter-zoom-in 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.letter-stage.exiting {
+    animation: letter-zoom-out 0.6s ease forwards;
+}
+
+@keyframes letter-zoom-in {
+    0% { transform: scale(0.3); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes letter-zoom-out {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(0.3); opacity: 0; }
+}
+
+.letter-scroll {
+    width: 100%;
+    max-width: 480px;
+    max-height: 90vh;
     overflow-y: auto;
     overflow-x: hidden;
-    opacity: 0;
+    border-radius: 12px;
+}
+
+.letter {
+    background: 
+        linear-gradient(135deg, #fff9e6 0%, #faf3e0 50%, #f0e0bc 100%);
+    border-radius: 12px;
+    position: relative;
+    box-shadow: 
+        0 30px 80px rgba(0,0,0,0.6),
+        0 0 0 1px rgba(212, 175, 55, 0.4);
+    overflow: hidden;
 }
 
 .letter::before {
@@ -411,61 +471,90 @@ html, body {
     position: absolute;
     inset: 0;
     background: 
-        repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(139, 115, 85, 0.15) 28px, rgba(139, 115, 85, 0.15) 29px),
-        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+        repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(139, 115, 85, 0.08) 28px, rgba(139, 115, 85, 0.08) 29px),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.3'/%3E%3C/svg%3E");
     pointer-events: none;
-    opacity: 0.4;
+    opacity: 0.5;
     mix-blend-mode: multiply;
 }
 
-.letter::after {
+/* تصویر بالای نامه */
+.letter-header-image {
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    position: relative;
+    border-bottom: 3px solid var(--gold);
+}
+
+.letter-header-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.95) contrast(1.1);
+}
+
+.letter-header-image::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at top left, rgba(139, 69, 19, 0.3) 0%, transparent 50%),
-                radial-gradient(ellipse at bottom right, rgba(101, 67, 33, 0.3) 0%, transparent 50%);
-    pointer-events: none;
-    border-radius: 4px;
+    background: linear-gradient(180deg, transparent 50%, rgba(255, 249, 230, 0.9) 100%);
 }
 
-.letter.show {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
+.image-fallback {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--emerald) 0%, var(--gold) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
 }
 
 .letter-content {
     position: relative;
     z-index: 1;
+    padding: 25px 22px;
 }
 
 .letter-title {
     font-family: 'Parastoo', serif;
-    font-size: 26px;
-    color: #5d4037;
+    font-size: 24px;
+    color: #c2185b;
     text-align: center;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.letter-subtitle {
+    text-align: center;
+    color: var(--emerald);
+    font-size: 13px;
     margin-bottom: 20px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    font-family: 'Parastoo', serif;
+    opacity: 0.8;
 }
 
 .letter-body {
-    font-size: 16px;
-    line-height: 1.8;
+    font-size: 15px;
+    line-height: 2;
     color: #3e2723;
     text-align: justify;
     font-family: 'Parastoo', serif;
-    min-height: 100px;
+    min-height: 150px;
 }
 
 .letter-body p {
-    margin-bottom: 12px;
+    margin-bottom: 14px;
     text-indent: 20px;
+    padding: 4px 0;
 }
 
 .cursor-blink {
     display: inline-block;
     width: 2px;
-    height: 18px;
-    background: #5d4037;
+    height: 17px;
+    background: #c2185b;
     margin-right: 2px;
     animation: blink 0.8s infinite;
     vertical-align: middle;
@@ -478,102 +567,355 @@ html, body {
 
 .letter-signature {
     margin-top: 25px;
-    text-align: left;
-    font-style: italic;
-    color: #5d4037;
-    font-size: 17px;
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(194, 24, 91, 0.1));
+    border-radius: 8px;
+    border: 1px dashed rgba(212, 175, 55, 0.4);
+}
+
+.signature-emoji {
+    font-size: 36px;
+    margin-bottom: 8px;
+    animation: bounce-emoji 1s ease-in-out infinite;
+}
+
+@keyframes bounce-emoji {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+.signature-text {
+    font-size: 16px;
+    color: var(--emerald);
+    font-weight: 700;
+    margin-bottom: 5px;
     font-family: 'Parastoo', serif;
 }
 
-.heart-beat {
-    color: var(--rose);
-    display: inline-block;
-    animation: heartbeat 1.2s ease-in-out infinite;
-    font-size: 22px;
+.signature-name {
+    font-size: 14px;
+    color: #5d4037;
+    font-family: 'Parastoo', serif;
 }
 
-@keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    25% { transform: scale(1.3); }
-    50% { transform: scale(1); }
-    75% { transform: scale(1.2); }
-}
-
-/* ============ راهنما ============ */
-.hint {
+/* ============ کیک تولد ۱۹ شمع ============ */
+.cake-container {
     position: fixed;
-    bottom: 25%;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    z-index: 15;
+    padding-bottom: 80px;
+    pointer-events: none;
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+.cake-container.hidden {
+    opacity: 0;
+    transform: translateY(100px);
+    pointer-events: none;
+}
+
+.cake-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.cake {
+    position: relative;
+    width: 280px;
+    height: 200px;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));
+    animation: cake-entrance 1.5s ease-out;
+}
+
+@keyframes cake-entrance {
+    0% { transform: translateY(100px) scale(0.5); opacity: 0; }
+    100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* شمع‌ها */
+.candles-row {
+    position: absolute;
+    top: -45px;
     left: 50%;
     transform: translateX(-50%);
-    color: var(--gold);
-    font-size: 14px;
-    text-align: center;
-    z-index: 20;
-    animation: hint-bounce 2s ease-in-out infinite;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    pointer-events: none;
-    transition: opacity 0.5s;
+    width: 240px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5px;
+    z-index: 10;
 }
 
-.hint.hidden { opacity: 0; }
+.candle {
+    position: relative;
+    width: 6px;
+    height: 30px;
+    background: linear-gradient(180deg, #fff8dc 0%, #ffd700 50%, #ff8c00 100%);
+    border-radius: 2px 2px 0 0;
+    box-shadow: inset 0 -2px 4px rgba(0,0,0,0.2);
+}
 
-@keyframes hint-bounce {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(-10px); }
+.candle::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 7px;
+    height: 3px;
+    background: #c41e3a;
+    border-radius: 50%;
+}
+
+.flame {
+    position: absolute;
+    top: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 22px;
+    background: radial-gradient(ellipse at center bottom,
+        #fff8dc 0%,
+        #ffeb3b 25%,
+        #ff9800 60%,
+        #ff5722 85%,
+        transparent 100%);
+    border-radius: 50% 50% 30% 30% / 60% 60% 40% 40%;
+    animation: flame-flicker 0.4s ease-in-out infinite alternate;
+    filter: blur(0.3px);
+}
+
+.flame::before {
+    content: '';
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 12px;
+    background: radial-gradient(ellipse, #fff8dc, #ffeb3b);
+    border-radius: 50%;
+    animation: flame-inner 0.3s ease-in-out infinite alternate;
+}
+
+.flame::after {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle, rgba(255, 200, 100, 0.4) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: flame-glow 2s ease-in-out infinite;
+}
+
+.candle:nth-child(odd) .flame { animation-delay: 0.1s; }
+.candle:nth-child(even) .flame { animation-delay: 0.2s; }
+.candle:nth-child(3n) .flame { animation-delay: 0.15s; }
+.candle:nth-child(5n) .flame { animation-delay: 0.25s; }
+
+@keyframes flame-flicker {
+    0% { transform: translateX(-50%) scale(1, 1) rotate(-3deg); }
+    100% { transform: translateX(-50%) scale(1.1, 1.15) rotate(3deg); }
+}
+
+@keyframes flame-inner {
+    0% { opacity: 0.7; transform: translateX(-50%) scale(0.9); }
+    100% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+}
+
+@keyframes flame-glow {
+    0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.5; }
+    50% { transform: translateX(-50%) scale(1.4); opacity: 0.9; }
+}
+
+/* خامه بالای کیک */
+.cake-top {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 25px;
+    background: linear-gradient(180deg, #fff5e6 0%, #ffe4b5 100%);
+    border-radius: 50%;
+    z-index: 5;
+    box-shadow: inset 0 -3px 6px rgba(0,0,0,0.1);
+}
+
+.frosting-drip {
+    position: absolute;
+    top: 100%;
+    background: linear-gradient(180deg, #fff5e6, #ffe4b5);
+    border-radius: 0 0 50% 50%;
+    z-index: 4;
+}
+
+.frosting-drip:nth-child(1) { left: 5%; width: 15px; height: 20px; }
+.frosting-drip:nth-child(2) { left: 20%; width: 12px; height: 25px; }
+.frosting-drip:nth-child(3) { left: 35%; width: 18px; height: 18px; }
+.frosting-drip:nth-child(4) { left: 50%; width: 14px; height: 22px; transform: translateX(-50%); }
+.frosting-drip:nth-child(5) { left: 65%; width: 18px; height: 18px; }
+.frosting-drip:nth-child(6) { left: 80%; width: 12px; height: 25px; }
+.frosting-drip:nth-child(7) { left: 92%; width: 15px; height: 20px; }
+
+/* لایه‌های کیک */
+.cake-layer {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 10px;
+    box-shadow: 
+        inset 0 -5px 10px rgba(0,0,0,0.15),
+        inset 0 2px 4px rgba(255,255,255,0.3);
+}
+
+.cake-layer-top {
+    top: 12px;
+    width: 180px;
+    height: 55px;
+    background: linear-gradient(180deg, #ff6b9d 0%, #c2185b 50%, #880e4f 100%);
+}
+
+.cake-layer-middle {
+    top: 70px;
+    width: 220px;
+    height: 60px;
+    background: linear-gradient(180deg, #fff5e6 0%, #ffe4b5 50%, #d4a574 100%);
+}
+
+.cake-layer-bottom {
+    top: 133px;
+    width: 260px;
+    height: 65px;
+    background: linear-gradient(180deg, #8b4513 0%, #5d2f0a 50%, #3e1f00 100%);
+}
+
+.cake-decoration {
+    position: absolute;
+    font-size: 16px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.cake-layer-top .cake-decoration:nth-child(1) { left: 20%; top: 50%; transform: translateY(-50%); }
+.cake-layer-top .cake-decoration:nth-child(2) { left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.cake-layer-top .cake-decoration:nth-child(3) { right: 20%; top: 50%; transform: translateY(-50%); }
+
+.cake-layer-middle .cake-decoration:nth-child(1) { left: 15%; top: 50%; transform: translateY(-50%); }
+.cake-layer-middle .cake-decoration:nth-child(2) { left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.cake-layer-middle .cake-decoration:nth-child(3) { right: 15%; top: 50%; transform: translateY(-50%); }
+
+.cake-layer-bottom .cake-decoration:nth-child(1) { left: 20%; top: 50%; transform: translateY(-50%); }
+.cake-layer-bottom .cake-decoration:nth-child(2) { left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.cake-layer-bottom .cake-decoration:nth-child(3) { right: 20%; top: 50%; transform: translateY(-50%); }
+
+/* بشقاب کیک */
+.cake-plate {
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 290px;
+    height: 15px;
+    background: linear-gradient(180deg, #e8e8e8 0%, #b0b0b0 100%);
+    border-radius: 50%;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* متن تولدت مبارک */
+.birthday-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.birthday-letter, .birthday-number {
+    display: inline-block;
+    font-family: 'Parastoo', serif;
+    font-size: 28px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #d4af37 0%, #f4d03f 50%, #d4af37 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 10px rgba(212, 175, 55, 0.5);
+    animation: letter-bounce 1.5s ease-in-out infinite;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.birthday-letter:nth-child(1) { animation-delay: 0s; }
+.birthday-letter:nth-child(2) { animation-delay: 0.1s; }
+.birthday-letter:nth-child(3) { animation-delay: 0.2s; }
+.birthday-letter:nth-child(4) { animation-delay: 0.3s; }
+.birthday-letter:nth-child(5) { animation-delay: 0.4s; }
+.birthday-letter:nth-child(6) { animation-delay: 0.5s; }
+.birthday-letter:nth-child(7) { animation-delay: 0.6s; }
+.birthday-letter:nth-child(8) { animation-delay: 0.7s; }
+.birthday-letter:nth-child(9) { animation-delay: 0.8s; }
+.birthday-letter:nth-child(10) { animation-delay: 0.9s; }
+
+.birthday-number:nth-child(12) { animation-delay: 1s; }
+.birthday-number:nth-child(13) { animation-delay: 1.1s; }
+
+@keyframes letter-bounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-8px) scale(1.1); }
 }
 
 /* ============ کنترل‌ها ============ */
 .controls {
     position: fixed;
-    bottom: 20px;
+    bottom: 15px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 12px;
+    gap: 10px;
     z-index: 100;
 }
 
 .ctrl-btn {
-    width: 50px;
-    height: 50px;
+    width: 46px;
+    height: 46px;
     border-radius: 50%;
     border: 2px solid var(--gold);
-    background: rgba(10, 10, 31, 0.7);
+    background: rgba(26, 10, 10, 0.8);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     color: white;
-    font-size: 20px;
+    font-size: 18px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
 }
 
-.ctrl-btn:hover, .ctrl-btn:active {
-    transform: scale(1.1);
-    background: rgba(212, 175, 55, 0.3);
-}
-
+.ctrl-btn:active { transform: scale(0.95); }
 .ctrl-btn.hidden { display: none; }
-
 .ctrl-btn.active {
-    background: rgba(212, 175, 55, 0.5);
+    background: rgba(212, 175, 55, 0.4);
     border-color: #fff;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
 }
 
 /* ============ نوار پیشرفت ============ */
 .progress-bar {
     position: fixed;
-    top: 20px;
+    top: 15px;
     left: 50%;
     transform: translateX(-50%);
     width: 200px;
-    height: 4px;
-    background: rgba(255,255,255,0.2);
-    border-radius: 2px;
-    overflow: hidden;
     z-index: 100;
     transition: opacity 0.3s;
 }
@@ -581,35 +923,66 @@ html, body {
 .progress-bar.hidden { opacity: 0; pointer-events: none; }
 
 .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--gold), var(--rose));
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--emerald-light), var(--gold));
     width: 0%;
     transition: width 0.3s ease;
-    box-shadow: 0 0 10px var(--gold);
+    border-radius: 2px;
+    box-shadow: 0 0 8px var(--gold);
+}
+
+.progress-text {
+    text-align: center;
+    color: var(--gold-light);
+    font-size: 11px;
+    margin-top: 4px;
+    font-family: 'Parastoo', serif;
 }
 
 /* ============ رسپانسیو موبایل ============ */
 @media (max-width: 480px) {
-    .moon { width: 60px; height: 60px; top: 5%; left: 5%; }
-    .candle { width: 40px; height: 100px; }
-    .candle .wax { height: 85px; }
-    .candle .flame { width: 14px; height: 32px; top: -35px; }
-    .envelope-wrapper { width: 85vw; height: 50vh; }
-    .letter { padding: 20px 15px; max-height: 70vh; }
-    .letter-title { font-size: 22px; }
-    .letter-body { font-size: 15px; line-height: 1.7; }
-    .hint { font-size: 13px; bottom: 22%; }
-    .candles-container { padding: 0 5%; bottom: 3%; }
-}
-
-@media (max-height: 600px) {
+    .envelope-stage { 
+        width: 88vw; 
+        top: 45%;
+        transform: translate(-50%, -50%);
+    }
+    .envelope-stage.fade-out {
+        transform: translate(-50%, -50%) scale(0.6);
+    }
     .envelope-wrapper { height: 200px; }
-    .moon { width: 50px; height: 50px; }
-    .candle { transform: scale(0.7); }
+    .envelope-text { font-size: 14px; }
+    .envelope-subtext { font-size: 10px; }
+    .envelope-icon { font-size: 36px; }
+    .wax-seal { width: 45px; height: 45px; font-size: 20px; top: 10px; }
+    .letter-content { padding: 18px 16px; }
+    .letter-title { font-size: 20px; }
+    .letter-subtitle { font-size: 11px; }
+    .letter-body { font-size: 14px; line-height: 1.9; }
+    .letter-body p { text-indent: 15px; margin-bottom: 10px; }
+    .cake { transform: scale(0.7); transform-origin: bottom center; }
+    .candles-row { width: 200px; top: -40px; }
+    .candle { width: 5px; height: 25px; }
+    .flame { width: 8px; height: 18px; top: -18px; }
+    .birthday-letter, .birthday-number { font-size: 22px; }
+    .hint { 
+        bottom: -45px; 
+        font-size: 12px; 
+        padding: 6px 12px;
+    }
+    .dome-corner { width: 150px; height: 150px; top: -30px; right: -30px; }
+    .minaret-corner { width: 120px; height: 120px; bottom: -20px; left: -20px; }
 }
 
-/* ============ اسکرول‌بار سفارشی ============ */
-.letter::-webkit-scrollbar { width: 6px; }
-.letter::-webkit-scrollbar-track { background: rgba(139, 115, 85, 0.1); border-radius: 3px; }
-.letter::-webkit-scrollbar-thumb { background: rgba(139, 115, 85, 0.5); border-radius: 3px; }
-.letter::-webkit-scrollbar-thumb:hover { background: rgba(139, 115, 85, 0.7); }
+@media (max-height: 650px) {
+    .envelope-stage { top: 40%; }
+    .envelope-wrapper { height: 180px; }
+    .cake { transform: scale(0.6); }
+    .cake-container { padding-bottom: 60px; }
+    .letter-content { padding: 15px 14px; }
+    .letter-body { font-size: 13px; line-height: 1.8; }
+}
+
+/* ============ اسکرول‌بار ============ */
+.letter-scroll::-webkit-scrollbar { width: 6px; }
+.letter-scroll::-webkit-scrollbar-track { background: rgba(139, 115, 85, 0.1); border-radius: 3px; }
+.letter-scroll::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
