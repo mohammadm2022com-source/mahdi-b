@@ -13,6 +13,7 @@ const envelopeStage = document.getElementById('envelopeStage');
 const envelope = document.getElementById('envelope');
 const envelopeWrapper = document.getElementById('envelopeWrapper');
 const envelopeFlap = document.getElementById('envelopeFlap');
+const envelopeSticker = document.getElementById('envelopeSticker');
 const letterStage = document.getElementById('letterStage');
 const letter = document.getElementById('letter');
 const letterBody = document.getElementById('letterBody');
@@ -142,81 +143,90 @@ function drawParticles() {
 // ============ صدا ============
 function initAudio() {
     if (!state.audioContext) {
-        state.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        try {
+            state.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        } catch(e) {
+            console.log('Audio not supported');
+        }
     }
 }
 
 function playSound(type) {
     if (!state.soundOn) return;
     initAudio();
+    if (!state.audioContext) return;
     
     const ctx = state.audioContext;
     const now = ctx.currentTime;
     
-    if (type === 'open') {
-        const noise = ctx.createBufferSource();
-        const buffer = ctx.createBuffer(1, ctx.sampleRate * 0.8, ctx.sampleRate);
-        const data = buffer.getChannelData(0);
-        for (let i = 0; i < data.length; i++) {
-            data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.2));
-        }
-        noise.buffer = buffer;
-        
-        const filter = ctx.createBiquadFilter();
-        filter.type = 'bandpass';
-        filter.frequency.value = 2500;
-        filter.Q.value = 1.5;
-        
-        const gain = ctx.createGain();
-        gain.gain.setValueAtTime(0.4, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.8);
-        
-        noise.connect(filter);
-        filter.connect(gain);
-        gain.connect(ctx.destination);
-        noise.start(now);
-    } else if (type === 'type') {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.frequency.value = 250 + Math.random() * 150;
-        osc.type = 'triangle';
-        gain.gain.setValueAtTime(0.025, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start(now);
-        osc.stop(now + 0.04);
-    } else if (type === 'magic') {
-        const freqs =;
-        freqs.forEach((freq, i) => {
+    try {
+        if (type === 'open') {
+            const noise = ctx.createBufferSource();
+            const buffer = ctx.createBuffer(1, ctx.sampleRate * 0.8, ctx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < data.length; i++) {
+                data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.2));
+            }
+            noise.buffer = buffer;
+            
+            const filter = ctx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.value = 2500;
+            filter.Q.value = 1.5;
+            
+            const gain = ctx.createGain();
+            gain.gain.setValueAtTime(0.4, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.8);
+            
+            noise.connect(filter);
+            filter.connect(gain);
+            gain.connect(ctx.destination);
+            noise.start(now);
+        } else if (type === 'type') {
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
-            osc.frequency.value = freq;
-            osc.type = 'sine';
-            const start = now + i * 0.1;
-            gain.gain.setValueAtTime(0, start);
-            gain.gain.linearRampToValueAtTime(0.1, start + 0.05);
-            gain.gain.exponentialRampToValueAtTime(0.001, start + 0.4);
+            osc.frequency.value = 250 + Math.random() * 150;
+            osc.type = 'triangle';
+            gain.gain.setValueAtTime(0.025, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
             osc.connect(gain);
             gain.connect(ctx.destination);
-            osc.start(start);
-            osc.stop(start + 0.4);
-        });
-    } else if (type === 'click') {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.frequency.value = 800;
-        gain.gain.setValueAtTime(0.08, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start(now);
-        osc.stop(now + 0.1);
+            osc.start(now);
+            osc.stop(now + 0.04);
+        } else if (type === 'magic') {
+            const freqs =;
+            freqs.forEach((freq, i) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.frequency.value = freq;
+                osc.type = 'sine';
+                const start = now + i * 0.1;
+                gain.gain.setValueAtTime(0, start);
+                gain.gain.linearRampToValueAtTime(0.1, start + 0.05);
+                gain.gain.exponentialRampToValueAtTime(0.001, start + 0.4);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(start);
+                osc.stop(start + 0.4);
+            });
+        } else if (type === 'click') {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.frequency.value = 800;
+            gain.gain.setValueAtTime(0.08, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.1);
+        }
+    } catch(e) {
+        console.log('Sound error:', e);
     }
 }
 
 // ============ تایپ نامه ============
-async function typeParagraph(text, paragraphIndex, totalParagraphs) {
+async function typeParagraph(text, paragraphIndex) {
     return new Promise((resolve) => {
         const lines = text.split('\n');
         const p = document.createElement('p');
@@ -278,7 +288,7 @@ async function startTyping() {
     
     for (let i = 0; i < letterParagraphs.length; i++) {
         if (!state.isTyping) break;
-        await typeParagraph(letterParagraphs[i], i, letterParagraphs.length);
+        await typeParagraph(letterParagraphs[i], i);
         if (i < letterParagraphs.length - 1) {
             await new Promise(r => setTimeout(r, 500));
         }
@@ -298,7 +308,12 @@ function resetLetter() {
 
 // ============ باز و بسته کردن پاکت ============
 function openEnvelope() {
-    if (state.isOpened) return;
+    if (state.isOpened) {
+        console.log('Already opened');
+        return;
+    }
+    
+    console.log('✅ Envelope clicked - opening!');
     state.isOpened = true;
     
     initAudio();
@@ -347,7 +362,6 @@ function closeEnvelope() {
     }, 800);
 }
 
-// ============ کنترل صدا/موزیک ============
 function toggleMusic() {
     state.musicOn = !state.musicOn;
     if (state.musicOn) {
@@ -373,12 +387,42 @@ function toggleSound() {
     if (state.soundOn) playSound('click');
 }
 
-// ============ رویدادها ============
-envelopeStage.addEventListener('click', openEnvelope);
-envelopeFlap.addEventListener('click', (e) => { e.stopPropagation(); openEnvelope(); });
-closeBtn.addEventListener('click', (e) => { e.stopPropagation(); closeEnvelope(); });
-musicBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleMusic(); });
-soundBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSound(); });
+// ⭐⭐⭐ رویدادهای اصلی - چند لایه برای اطمینان ⭐⭐⭐
+function setupClickHandlers() {
+    // هم click و هم touchstart برای موبایل و دسکتاپ
+    const handleClick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        openEnvelope();
+    };
+    
+    // روی envelopeStage
+    envelopeStage.addEventListener('click', handleClick);
+    envelopeStage.addEventListener('touchstart', handleClick, { passive: false });
+    
+    // روی wrapper (اضافی)
+    envelopeWrapper.addEventListener('click', handleClick);
+    envelopeWrapper.addEventListener('touchstart', handleClick, { passive: false });
+    
+    // روی envelope
+    envelope.addEventListener('click', handleClick);
+    envelope.addEventListener('touchstart', handleClick, { passive: false });
+    
+    // روی خود استیکر (مهم!)
+    if (envelopeSticker) {
+        envelopeSticker.addEventListener('click', handleClick);
+        envelopeSticker.addEventListener('touchstart', handleClick, { passive: false });
+    }
+    
+    // سایر کنترل‌ها
+    closeBtn.addEventListener('click', (e) => { e.stopPropagation(); closeEnvelope(); });
+    musicBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleMusic(); });
+    soundBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSound(); });
+    
+    console.log('✅ Click handlers attached successfully');
+}
+
+setupClickHandlers();
 
 // جلوگیری از زوم دو انگشتی
 document.addEventListener('touchstart', (e) => {
@@ -403,3 +447,5 @@ createCandles();
 createStars();
 initParticles();
 drawParticles();
+
+console.log('🎂 Birthday page loaded successfully!');
