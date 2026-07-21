@@ -3,129 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#0a1a2e">
-    <title>💌 نامه‌ای از دل</title>
+    <meta name="theme-color" content="#1a0a0a">
+    <title>🎂 تولدت مبارک دوست من</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700&family=Parastoo:wght@400;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- پس‌زمینه‌ها -->
-    <div class="bg-pattern"></div>
-    <div class="bg-gradient"></div>
-    <div class="night-sky" id="nightSky"></div>
+    <!-- پس‌زمینه حرم -->
+    <div class="shrine-bg">
+        <div class="shrine-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Imam_reza_shrine_08.jpg/800px-Imam_reza_shrine_08.jpg')"></div>
+        <div class="shrine-overlay"></div>
+    </div>
+    
     <canvas id="particlesCanvas"></canvas>
+    <div class="night-sky" id="nightSky"></div>
 
-    <!-- ماه بزرگ -->
-    <div class="sky-decoration">
-        <div class="big-crescent">
-            <div class="crescent-moon"></div>
-            <div class="crescent-glow"></div>
+    <!-- گنبد و ضریح طلایی در گوشه‌ها -->
+    <div class="shrine-decoration">
+        <div class="dome-corner">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Golden_dome_of_Imam_Reza_Shrine.jpg/300px-Golden_dome_of_Imam_Reza_Shrine.jpg" 
+                 alt="گنبد طلایی" 
+                 onerror="this.style.display='none'">
         </div>
-    </div>
-
-    <!-- فانوس‌های معلق -->
-    <div class="lanterns-container">
-        <div class="lantern lantern-1">
-            <div class="lantern-string"></div>
-            <div class="lantern-body">
-                <div class="lantern-cap"></div>
-                <div class="lantern-glass">
-                    <div class="lantern-flame"></div>
-                </div>
-                <div class="lantern-base"></div>
-                <div class="lantern-tassel"></div>
-            </div>
+        <div class="minaret-corner">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Imam_Reza_Shrine_Minarets.jpg/200px-Imam_Reza_Shrine_Minarets.jpg" 
+                 alt="مناره‌ها"
+                 onerror="this.style.display='none'">
         </div>
-        <div class="lantern lantern-2">
-            <div class="lantern-string"></div>
-            <div class="lantern-body">
-                <div class="lantern-cap"></div>
-                <div class="lantern-glass">
-                    <div class="lantern-flame"></div>
-                </div>
-                <div class="lantern-base"></div>
-                <div class="lantern-tassel"></div>
-            </div>
-        </div>
-        <div class="lantern lantern-3">
-            <div class="lantern-string"></div>
-            <div class="lantern-body">
-                <div class="lantern-cap"></div>
-                <div class="lantern-glass">
-                    <div class="lantern-flame"></div>
-                </div>
-                <div class="lantern-base"></div>
-                <div class="lantern-tassel"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- مسجد سیلوئت -->
-    <div class="mosque-silhouette">
-        <div class="mosque-minaret m1"></div>
-        <div class="mosque-dome"></div>
-        <div class="mosque-minaret m2"></div>
     </div>
 
     <!-- استیکرهای شناور -->
     <div class="stickers-container" id="stickersContainer"></div>
 
-    <!-- پاکت نامه -->
+    <!-- صحنه پاکت -->
     <div class="envelope-stage" id="envelopeStage">
         <div class="envelope-shadow"></div>
         <div class="envelope-wrapper" id="envelopeWrapper">
             <div class="envelope" id="envelope">
+                <!-- پشت پاکت -->
                 <div class="envelope-back"></div>
-                <div class="envelope-inner-paper"></div>
-                <div class="envelope-left"></div>
-                <div class="envelope-right"></div>
-                <div class="envelope-front">
+                
+                <!-- بدنه اصلی پاکت -->
+                <div class="envelope-body">
                     <div class="envelope-pattern"></div>
-                    <div class="envelope-bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
-                    <div class="wax-seal">
-                        <div class="seal-inner">۞</div>
+                    <div class="envelope-frame">
+                        <div class="frame-corner tl"></div>
+                        <div class="frame-corner tr"></div>
+                        <div class="frame-corner bl"></div>
+                        <div class="frame-corner br"></div>
+                        <div class="envelope-icon">💌</div>
+                        <div class="envelope-text">نامه‌ای از طرف دوستت</div>
+                        <div class="envelope-subtext">برای تو که خاص‌ترینی</div>
                     </div>
-                    <div class="envelope-text">نامه‌ای برای تو</div>
-                    <div class="envelope-subtext">دوست نازنینم</div>
+                    <div class="wax-seal">
+                        <span>۞</span>
+                    </div>
                 </div>
-                <div class="envelope-flap" id="envelopeFlap">
-                    <div class="flap-pattern"></div>
-                    <div class="flap-emboss"></div>
-                </div>
+                
+                <!-- فلپ بالایی (مثلث) -->
+                <div class="envelope-flap" id="envelopeFlap"></div>
             </div>
+        </div>
+        
+        <!-- راهنما - زیر پاکت -->
+        <div class="hint" id="hint">
+            <span class="hint-icon">👇</span>
+            <span class="hint-text">روی پاکت بزن</span>
         </div>
     </div>
 
     <!-- نامه (خارج از پاکت) -->
     <div class="letter-stage hidden" id="letterStage">
-        <div class="letter" id="letter">
-            <div class="letter-frame">
-                <div class="corner-decor tl"></div>
-                <div class="corner-decor tr"></div>
-                <div class="corner-decor bl"></div>
-                <div class="corner-decor br"></div>
+        <div class="letter-scroll">
+            <div class="letter" id="letter">
+                <!-- تصویر کوچک حرم در بالای نامه -->
+                <div class="letter-header-image">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Golden_dome_of_Imam_Reza_Shrine.jpg/400px-Golden_dome_of_Imam_Reza_Shrine.jpg" 
+                         alt="حرم"
+                         onerror="this.parentElement.innerHTML='<div class=\'image-fallback\'>🌙</div>'">
+                </div>
+                
                 <div class="letter-content">
-                    <div class="letter-bismillah">﷽</div>
-                    <div class="letter-greeting">سلام بر تو ای یار صمیمی ❤</div>
+                    <h1 class="letter-title">سلام به بهترین دوستم! 🎂</h1>
+                    <div class="letter-subtitle">یه پیام کوچیک از ته دلم</div>
+                    
                     <div class="letter-body" id="letterBody"></div>
+                    
                     <div class="letter-signature">
-                        <div class="signature-line">دوستی که همیشه در قلبش جا داری</div>
-                        <div class="signature-name">— برادر کوچکترت</div>
-                    </div>
-                    <div class="letter-footer">
-                        <span class="heart-beat">♥</span>
-                        <span class="prayer">اللَّهُمَّ احْفَظْهُ</span>
-                        <span class="heart-beat">♥</span>
+                        <div class="signature-emoji">🤗</div>
+                        <div class="signature-text">دوستی که خدا بهم هدیه داد</div>
+                        <div class="signature-name">— دوست همیشگیت</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- راهنما -->
-    <div class="hint" id="hint">
-        <span class="hint-icon">👆</span>
-        <span class="hint-text">روی پاکت بزن</span>
+    <!-- کیک تولد با ۱۹ شمع -->
+    <div class="cake-container" id="cakeContainer">
+        <div class="cake-stage">
+            <div class="cake">
+                <!-- ۱۹ شمع -->
+                <div class="candles-row">
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                </div>
+                
+                <!-- خامه بالای کیک -->
+                <div class="cake-top">
+                    <div class="frosting-drip"></div>
+                    <div class="frosting-drip"></div>
+                    <div class="frosting-drip"></div>
+                    <div class="frosting-drip"></div>
+                    <div class="frosting-drip"></div>
+                    <div class="frosting-drip"></div>
+                    <div class="frosting-drip"></div>
+                </div>
+                
+                <!-- لایه بالایی کیک -->
+                <div class="cake-layer cake-layer-top">
+                    <div class="cake-decoration">🌸</div>
+                    <div class="cake-decoration">🌸</div>
+                    <div class="cake-decoration">🌸</div>
+                </div>
+                
+                <!-- لایه وسط -->
+                <div class="cake-layer cake-layer-middle">
+                    <div class="cake-decoration">❤️</div>
+                    <div class="cake-decoration">❤️</div>
+                    <div class="cake-decoration">❤️</div>
+                </div>
+                
+                <!-- لایه پایینی -->
+                <div class="cake-layer cake-layer-bottom">
+                    <div class="cake-decoration">✨</div>
+                    <div class="cake-decoration">✨</div>
+                    <div class="cake-decoration">✨</div>
+                </div>
+                
+                <!-- بشقاب -->
+                <div class="cake-plate"></div>
+            </div>
+            
+            <!-- پیام تولدت مبارک -->
+            <div class="birthday-text">
+                <span class="birthday-letter">ت</span><span class="birthday-letter">و</span><span class="birthday-letter">ل</span><span class="birthday-letter">د</span><span class="birthday-letter">ت</span>
+                <span class="birthday-space"></span>
+                <span class="birthday-letter">م</span><span class="birthday-letter">ب</span><span class="birthday-letter">ا</span><span class="birthday-letter">ر</span><span class="birthday-letter">ک</span>
+                <span class="birthday-space"></span>
+                <span class="birthday-number">۱</span><span class="birthday-number">۹</span>
+            </div>
+        </div>
     </div>
 
     <!-- کنترل‌ها -->
@@ -149,7 +194,7 @@
 
     <!-- موسیقی -->
     <audio id="bgMusic" loop>
-        <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_4cb1c9d7e0.mp3" type="audio/mpeg">
+        <source src="https://cdn.pixabay.com/audio/2024/02/22/audio_b144d8d4ac.mp3" type="audio/mpeg">
     </audio>
 
     <script src="script.js"></script>
